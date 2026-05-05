@@ -1360,7 +1360,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5681f4f3f8ba90b44afc29716ce0744e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TestRelay
-  Code: 
+  Code: W86KW7
 --- !u!1 &1757621212
 GameObject:
   m_ObjectHideFlags: 0

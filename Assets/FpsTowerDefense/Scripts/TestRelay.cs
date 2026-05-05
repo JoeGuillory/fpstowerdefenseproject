@@ -34,7 +34,12 @@ public class TestRelay : MonoBehaviour
             Debug.Log(joinCode);
             var transport = NetworkManager.Singleton.GetComponent<UnityTransport>();
 
-            transport.SetRelayServerData(AllocationUtils.ToRelayServerData(allocation,"udp"));
+            transport.SetHostRelayData(
+                allocation.RelayServer.IpV4,
+                (ushort)allocation.RelayServer.Port,
+                allocation.AllocationIdBytes,
+                allocation.Key,
+                allocation.ConnectionData);
 
             NetworkManager.Singleton.StartHost();
         } catch (RelayServiceException e)
@@ -48,11 +53,19 @@ public class TestRelay : MonoBehaviour
     {
         try
         {
-           JoinAllocation join =  await RelayService.Instance.JoinAllocationAsync(Code);
+            JoinAllocation join =  await RelayService.Instance.JoinAllocationAsync(Code);
 
             var transport = NetworkManager.Singleton.GetComponent<UnityTransport>();
 
-            transport.SetRelayServerData(AllocationUtils.ToRelayServerData(join, "udp"));
+            transport.SetClientRelayData(
+                join.RelayServer.IpV4,
+                (ushort)join.RelayServer.Port,
+                join.AllocationIdBytes,
+                join.Key,
+                join.ConnectionData,
+                join.HostConnectionData);
+
+
             NetworkManager.Singleton.StartClient();
         }
         catch (RelayServiceException e) 
