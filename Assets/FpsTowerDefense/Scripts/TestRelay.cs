@@ -10,7 +10,7 @@ using UnityEngine;
 public class TestRelay : MonoBehaviour
 {
     [SerializeField]
-    string Code;
+    string code;
      private async void Start()
      {
         await UnityServices.InitializeAsync();
@@ -28,15 +28,10 @@ public class TestRelay : MonoBehaviour
         try
         {
             var allocation = await RelayService.Instance.CreateAllocationAsync(3);
-
             string joinCode = await RelayService.Instance.GetJoinCodeAsync(allocation.AllocationId);
-
             Debug.Log(joinCode);
             var transport = NetworkManager.Singleton.GetComponent<UnityTransport>();
-
-            RelayServerData relayData = AllocationUtils.ToRelayServerData(allocation, "udp");
-            transport.SetRelayServerData(relayData);
-
+            transport.SetRelayServerData(allocation.ToRelayServerData("udp"));
             NetworkManager.Singleton.StartHost();
         } catch (RelayServiceException e)
         {
@@ -49,16 +44,9 @@ public class TestRelay : MonoBehaviour
     {
         try
         {
-            Debug.Log("Tried Joinging");
-            JoinAllocation join =  await RelayService.Instance.JoinAllocationAsync(Code);
-
+            JoinAllocation join =  await RelayService.Instance.JoinAllocationAsync(code);
             var transport = NetworkManager.Singleton.GetComponent<UnityTransport>();
-
-            RelayServerData joinAllocation = AllocationUtils.ToRelayServerData(join, "udp");
-
-            Debug.Log(joinAllocation);
-            transport.SetRelayServerData(joinAllocation);
-
+            transport.SetRelayServerData(join.ToRelayServerData("udp"));
             NetworkManager.Singleton.StartClient();
         }
         catch (RelayServiceException e) 
