@@ -12,11 +12,13 @@ public class SteamTestScript : MonoBehaviour
     public ulong CurrentLobbyId;
     private const string HostAddressKey = "HostAddress";
     
-    [SerializeField]
     private NetworkManager _networkManager;
-    
-    
-    
+
+    private void Awake()
+    {
+        _networkManager = GetComponent<NetworkManager>();
+    }
+
     void Start()
     {
         if (!SteamManager.Initialized)

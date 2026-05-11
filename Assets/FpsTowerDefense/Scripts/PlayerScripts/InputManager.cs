@@ -3,10 +3,10 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 public class InputManager : MonoBehaviour
 {
-    public Vector2 move;
-    public Vector2 look;
-    public bool jump;
-
+    public Vector2 Move;
+    public Vector2 Look;
+    public bool IsJumping;
+    public bool IsSprinting;
 
   
     public void OnMove(InputValue value)
@@ -24,21 +24,31 @@ public class InputManager : MonoBehaviour
         JumpInput(value.isPressed);
     }
 
-   
+    public void OnSprint(InputValue value)
+    {
+        SprintInput(value.isPressed);
+    }
+
     public void MoveInput(Vector2 NewMoveInput)
     {
-        move = NewMoveInput;
+        Move = NewMoveInput;
     }
 
     public void LookInput(Vector2 NewLookInput)
     {
-        look = NewLookInput;
+        Look = NewLookInput;
     }
 
     public void JumpInput(bool NewJumpInput)
     {
-        jump = NewJumpInput;
+        IsJumping = NewJumpInput;
     }
+
+    public void SprintInput(bool NewSprintInput)
+    {
+        IsSprinting = NewSprintInput;
+    }
+
 
     private void OnApplicationFocus(bool hasFocus)
     {
