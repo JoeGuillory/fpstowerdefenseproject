@@ -9,5 +9,5 @@ EditorBuildSettings:
     path: Assets/FpsTowerDefense/Scenes/SampleScene.unity
     guid: 99c9720ab356a0642a771bea13969a05
   m_configObjects:
-    com.unity.input.settings: {fileID: 11400000, guid: 9e7be553448fa2546aea5752021cbcf7, type: 2}
+    com.unity.input.settings: {fileID: 11400000, guid: 4c6b14ec596271e9b9882f6d0db2cc25, type: 2}
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 8bcd150d8bb9e87418cc9541eddd4029, type: 3}

@@ -24,14 +24,13 @@ public class FpsController : MonoBehaviour
 
     public void MoveAndFall(Vector2 input)
     {
-
-        Debug.Log(_input.IsSprinting);
         float speed = _input.IsSprinting ? _sprintSpeed : _moveSpeed;
 
         if (_controller.isGrounded && _velocity.y < 0)
             _velocity.y = -2;
+        Vector3 move = (transform.right * input.x + transform.forward * input.y).normalized;
 
-        _controller.Move(transform.TransformDirection(new Vector3(input.x,0,input.y) * speed * Time.deltaTime));
+        _controller.Move(speed * Time.deltaTime * move);
         _velocity.y += _gravity * Time.deltaTime;
         _controller.Move(_velocity * Time.deltaTime);
 
@@ -48,7 +47,7 @@ public class FpsController : MonoBehaviour
 
         _camera.transform.localRotation = Quaternion.Euler(_xRotation, 0, 0);
 
-        Vector3 newRotation = Vector3.up * (mouseX * Time.deltaTime) * _xSensitivity;
+        Vector3 newRotation = (mouseX * Time.deltaTime) * _xSensitivity * Vector3.up;
         transform.Rotate(newRotation);
     }
     

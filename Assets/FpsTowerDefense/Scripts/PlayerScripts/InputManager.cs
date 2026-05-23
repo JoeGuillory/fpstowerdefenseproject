@@ -1,4 +1,3 @@
-using UnityEditor.Build;
 using UnityEngine;
 using UnityEngine.InputSystem;
 public class InputManager : MonoBehaviour
@@ -8,54 +7,84 @@ public class InputManager : MonoBehaviour
     public bool IsJumping;
     public bool IsSprinting;
 
-    private PlayerInput _playerInput;
-    private InputActionMap _actionMap;
+    private PlayerActionMap _playerActionMap;
     private void Awake()
     {
-        _playerInput = GetComponent<PlayerInput>();
+        _playerActionMap = new PlayerActionMap();
     }
 
-
-    public void OnMove(InputValue value)
+    private void OnEnable()
     {
-        MoveInput(value.Get<Vector2>());
+       _playerActionMap.Enable();
+
+       _playerActionMap.FpsPlayer.Move.performed += OnMove;
+       _playerActionMap.FpsPlayer.Move.canceled += OnMove;
+       
+       _playerActionMap.FpsPlayer.Look.performed += OnLook;
+       _playerActionMap.FpsPlayer.Look.canceled += OnLook;
+       
+       _playerActionMap.FpsPlayer.Jump.performed += OnJump;
+       _playerActionMap.FpsPlayer.Jump.canceled += OnJump;
+       
+       _playerActionMap.FpsPlayer.Sprint.performed += OnSprint;
+       _playerActionMap.FpsPlayer.Sprint.canceled += OnSprint;
     }
 
-    public void OnLook(InputValue value)
+    private void OnDisable()
     {
-        LookInput(value.Get<Vector2>());
-    }
-
-    public void OnJump(InputValue value)
-    {
+        _playerActionMap.FpsPlayer.Move.performed -= OnMove;
+        _playerActionMap.FpsPlayer.Move.canceled -= OnMove;
+       
+        _playerActionMap.FpsPlayer.Look.performed -= OnLook;
+        _playerActionMap.FpsPlayer.Look.canceled -= OnLook;
+       
+        _playerActionMap.FpsPlayer.Jump.performed -= OnJump;
+        _playerActionMap.FpsPlayer.Jump.canceled -= OnJump;
+       
+        _playerActionMap.FpsPlayer.Sprint.performed -= OnSprint;
+        _playerActionMap.FpsPlayer.Sprint.canceled -= OnSprint;
         
-        JumpInput(value.isPressed);
-        
+        _playerActionMap.Disable();
     }
 
-    public void OnSprint(InputValue value)
+    public void OnMove(InputAction.CallbackContext value)
     {
-        SprintInput(value.isPressed);
+        MoveInput(value.ReadValue<Vector2>());
     }
 
-    public void MoveInput(Vector2 NewMoveInput)
+    public void OnLook(InputAction.CallbackContext value)
     {
-        Move = NewMoveInput;
+        LookInput(value.ReadValue<Vector2>());
     }
 
-    public void LookInput(Vector2 NewLookInput)
+    public void OnJump(InputAction.CallbackContext value)
     {
-        Look = NewLookInput;
+        JumpInput(value.ReadValueAsButton());
     }
 
-    public void JumpInput(bool NewJumpInput)
+    public void OnSprint(InputAction.CallbackContext value)
     {
-        IsJumping = NewJumpInput;
+        SprintInput(value.ReadValueAsButton());
     }
 
-    public void SprintInput(bool NewSprintInput)
+    public void MoveInput(Vector2 newMoveInput)
     {
-        IsSprinting = NewSprintInput;
+        Move = newMoveInput;
+    }
+
+    public void LookInput(Vector2 newLookInput)
+    {
+        Look = newLookInput;
+    }
+
+    public void JumpInput(bool newJumpInput)
+    {
+        IsJumping = newJumpInput;
+    }
+
+    public void SprintInput(bool newSprintInput)
+    {
+        IsSprinting = newSprintInput;
     }
 
 
