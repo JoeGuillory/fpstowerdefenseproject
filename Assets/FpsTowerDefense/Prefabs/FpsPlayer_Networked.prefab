@@ -135,7 +135,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Unity.Netcode.Runtime::Unity.Netcode.NetworkObject
-  GlobalObjectIdHash: 3552234861
+  GlobalObjectIdHash: 315323466
   InScenePlacedSourceGlobalObjectIdHash: 0
   DeferredDespawnTick: 0
   Ownership: 1
@@ -220,10 +220,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c323724fd728f49408fc22ab24aaf9a5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::FpsController
-  _moveSpeed: 5
-  _sprintSpeed: 9
+  _moveSpeed: 10
+  _sprintSpeed: 15
+  _speedChangeRate: 5
   _gravity: -15
   _jumpHeight: 1.2
+  _jumpTimeout: 0.5
+  _fallTimeout: 0.15
   _xSensitivity: 10
   _ySensitivity: 10
   _camera: {fileID: 8003226962852206916}
@@ -243,6 +246,7 @@ MonoBehaviour:
   Look: {x: 0, y: 0}
   IsJumping: 0
   IsSprinting: 0
+  analogMovement: 0
 --- !u!1 &6104760287454564459
 GameObject:
   m_ObjectHideFlags: 0

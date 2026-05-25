@@ -7,6 +7,8 @@ public class InputManager : MonoBehaviour
     public bool IsJumping;
     public bool IsSprinting;
 
+    public bool analogMovement;
+
     private PlayerActionMap _playerActionMap;
     private void Awake()
     {
@@ -24,7 +26,6 @@ public class InputManager : MonoBehaviour
        _playerActionMap.FpsPlayer.Look.canceled += OnLook;
        
        _playerActionMap.FpsPlayer.Jump.performed += OnJump;
-       _playerActionMap.FpsPlayer.Jump.canceled += OnJump;
        
        _playerActionMap.FpsPlayer.Sprint.performed += OnSprint;
        _playerActionMap.FpsPlayer.Sprint.canceled += OnSprint;

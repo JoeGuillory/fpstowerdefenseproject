@@ -38,12 +38,14 @@ public class FpsControllerSync : NetworkBehaviour
         }
         base.OnNetworkSpawn();
     }
-
+    
     private void Update()
     {
         if (IsOwner)
         {
-            _controller.MoveAndFall(_input.Move);
+            _controller.JumpAndFall();
+            _controller.CheckGrounded();
+            _controller.Move();
         }
     }
 
